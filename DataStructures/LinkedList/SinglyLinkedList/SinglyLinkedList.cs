@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures.SinglyLinkedList
+namespace DataStructures.LinkedList.SinglyLinkedList
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <typeparam name="T">TODO. 2.</typeparam>
     public class SinglyLinkedList<T>
     {
         // points to the start of the list
-        private SinglyLinkedListNode<T> Head { get; set; }
+        private SinglyLinkedListNode<T>? Head { get; set; }
 
         /// <summary>
         /// Adds new node to the start of the list,
@@ -53,7 +49,7 @@ namespace DataStructures.SinglyLinkedList
             var tempElement = Head;
 
             // iterates through all elements
-            while (tempElement.Next != null)
+            while (tempElement.Next is not null)
             {
                 tempElement = tempElement.Next;
             }
@@ -77,7 +73,7 @@ namespace DataStructures.SinglyLinkedList
 
             var tempElement = Head;
 
-            for (var i = 0; tempElement != null && i < index; i++)
+            for (var i = 0; tempElement is not null && i < index; i++)
             {
                 tempElement = tempElement.Next;
             }
@@ -90,23 +86,18 @@ namespace DataStructures.SinglyLinkedList
             return tempElement.Data;
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <returns>TODO. 2.</returns>
         public int Length()
         {
-            var length = 0;
-
             // checks if there is a head
-            if (Head == null)
+            if (Head is null)
             {
-                return length;
+                return 0;
             }
 
             var tempElement = Head;
+            var length = 1;
 
-            while (tempElement != null)
+            while (tempElement.Next is not null)
             {
                 tempElement = tempElement.Next;
                 length++;
@@ -115,38 +106,29 @@ namespace DataStructures.SinglyLinkedList
             return length;
         }
 
-        /// <summary>
-        /// TODO. get the whole list.
-        /// </summary>
-        /// <returns>TODO.</returns>
         public IEnumerable<T> GetListData()
         {
             // temp ListElement to avoid overwriting the original
             var tempElement = Head;
 
             // all elements where a next attribute exists
-            while (tempElement != null)
+            while (tempElement is not null)
             {
                 yield return tempElement.Data;
                 tempElement = tempElement.Next;
             }
         }
 
-        /// <summary>
-        /// TODO. delete a element.
-        /// </summary>
-        /// <param name="element">TODO. 2.</param>
-        /// <returns>TODO. 3.</returns>
         public bool DeleteElement(T element)
         {
             var currentElement = Head;
-            SinglyLinkedListNode<T> previousElement = null;
+            SinglyLinkedListNode<T>? previousElement = null;
 
             // iterates through all elements
-            while (currentElement != null)
+            while (currentElement is not null)
             {
                 // checks if the element, which should get deleted is in this list element
-                if (currentElement.Data.Equals(element))
+                if ((currentElement.Data is null && element is null) || (currentElement.Data is not null && currentElement.Data.Equals(element)))
                 {
                     // if element is head just take the next one as head
                     if (currentElement.Equals(Head))
@@ -156,7 +138,7 @@ namespace DataStructures.SinglyLinkedList
                     }
 
                     // else take the prev one and overwrite the next with the one behind the deleted
-                    if (previousElement != null)
+                    if (previousElement is not null)
                     {
                         previousElement.Next = currentElement.Next;
                         return true;

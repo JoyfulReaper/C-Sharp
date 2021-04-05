@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algorithms.Searches
+namespace Algorithms.Search
 {
     /// <summary>
     /// TODO.
